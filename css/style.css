@@ -84,7 +84,7 @@ img{
     top:120px;
 }
 
-/* .container{display: none;} */
+.container{display: none;}
 
 .elegir{
     display: flex;
@@ -110,8 +110,4 @@ img{
 .Titulo{
     text-align: center;
     margin: 3rem;
-}
-
-.Config{
-    display: none;
 }
