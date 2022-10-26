@@ -25,7 +25,7 @@ body{
 
 input{
     width: 288px;
-    height: 75px;
+    height: 100px;
     margin-top: 1rem;
     font-family: poke;
 }
@@ -66,4 +66,52 @@ img{
 
 .normal{
     background-color: aliceblue;
+}
+
+.barraVida{
+    width: 200px;
+    height: 5px;
+    background-color: brown;
+}
+
+#barraVidaEnemigo{
+    background-color: green;
+}
+
+#ataques{
+    position: absolute;
+    left: 700px;
+    top:120px;
+}
+
+/* .container{display: none;} */
+
+.elegir{
+    display: flex;
+    width: 80%;
+    margin: auto;
+}
+
+.poke{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: 30%;
+    margin: 1rem;
+    border-radius: 30px;
+    background-color: #EEEBEB;
+}
+
+.elegir__img{
+    width: 100%;
+}
+
+.Titulo{
+    text-align: center;
+    margin: 3rem;
+}
+
+.Config{
+    display: none;
 }
