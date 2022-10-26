@@ -5,19 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Combate Pokémon</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-    <div id="juego">
-        <div class="containerDialogo">
-            <p id="dialogo">
-                ¡Un MR. MIME <br><br>salvaje!
-            </p>
+    <div class="container">
+        <div id="juego">
+            <div id="barraVidaEnemigo" class="barraVida">
+
+            </div>
+            <div id="barraVidaAliado" class="barraVida">
+
+            </div>
+            <div class="containerDialogo">
+                <p id="dialogo">
+                    ¡Un MR. MIME <br><br>salvaje!
+                </p>
+            </div>
+            
+        </div>
+        <div id="ataques">
+            <div>
+                <input type="button" value="Psíquico">
+                <input type="button" value="Barrera">
+            </div>
+            <div>
+                <input type="button" value="Puño Dinámico">
+                <input type="button" value="Psíquico">
+            </div>
         </div>
     </div>
-    
     
     <script src="./js/script.js"></script>
 </body>

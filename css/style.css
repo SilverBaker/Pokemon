@@ -11,7 +11,7 @@ body{
 }
 
 #juego{
-    max-width: 600px;
+    max-width: 599px;
     height: 534px;
     background-color: whitesmoke;
 }
@@ -19,11 +19,25 @@ body{
 #dialogo{
     padding: 0.2rem;
     height: 100%;
+    margin-left: 1rem;
     
+}
+
+input{
+    width: 288px;
+    height: 75px;
+    margin-top: 1rem;
+    font-family: poke;
+}
+
+input:hover{
+    background-color: blueviolet;
+    color: black;
 }
 
 img{
     width: 200%;
+    image-rendering: pixelated;
 }
 
 .containerDialogo{
@@ -35,4 +49,21 @@ img{
     height: 120px;
     border: 5px solid black;
     border-radius: 10px;
+}
+
+.psy{
+    background-color: rgb(255, 92, 233);
+}
+
+.fight{
+    background-color: rgb(133, 75, 0);
+}
+
+.sin{
+    background-color: rgb(31, 31, 31);
+    color: aliceblue;
+}
+
+.normal{
+    background-color: aliceblue;
 }
