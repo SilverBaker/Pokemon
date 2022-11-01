@@ -68,20 +68,84 @@ img{
     background-color: aliceblue;
 }
 
-.barraVida{
-    width: 200px;
-    height: 5px;
-    background-color: brown;
+
+.barraVida>p{
+    margin-top: -1rem;
+    display: flex;
+    flex-direction: column;
 }
 
+
+
 #barraVidaEnemigo{
-    background-color: green;
+    position: absolute;
+    top: 50px;
+    left: 70px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.3rem;
+    padding-top: 1.3rem;
+}
+
+.containerps{
+    outline: 1px solid black;
+    
+}
+
+#barraVidaAliado{
+    position: absolute;
+    top: 250px;
+    left: 320px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.3rem;
+    padding-top: 1.3rem;
+}
+
+.PS{
+    flex-wrap: wrap;
+    border-bottom: 5px solid black;
+    border-left: 5px solid black;
+    margin-top: -1rem;
+    padding: 0.3rem;
+    display: flex;
+    width: 100%;
+    font-size: 0.7rem;
+    align-items: center;
+}
+
+.nps{
+    width: 100%;
+    padding: 0.3rem;
+    display: flex;
+    margin:auto;
+    justify-content: flex-end;
+    width: 100%;
+    font-size: 1.5rem;
+    align-items: center;
+}
+
+.PS>div{
+    width: 150px;
+    height: 10px;
 }
 
 #ataques{
     position: absolute;
     left: 700px;
     top:120px;
+}
+
+#PSEnemigo{
+    width: 100%;
+    height: 10px;
+}
+
+#PSAliado{
+    width: 100%;
+    height: 10px;
 }
 
 .container{display: none;}
