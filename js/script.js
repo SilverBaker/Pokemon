@@ -15,9 +15,10 @@ let listaPokemon = [
     95,
     "PSIQUICO",
     "BARRERA",
-    "PUÑO DINAMICO",
+    "ONDA CERTERA",
     "CONFUSION",
     "PSY",
+    ""
   ],
   [
     "UMBREON",
@@ -32,6 +33,7 @@ let listaPokemon = [
     "PSIQUICO",
     "PULSO UMBRIO",
     "DARK",
+    ""
   ],
   [
     "HITMONLEE",
@@ -46,20 +48,22 @@ let listaPokemon = [
     "PUÑO DINAMICO",
     "PUNTAPIE",
     "FIGHT",
+    ""
   ],
 ];
 
 let movimientos = [
   ["PSIQUICO", 90, 100, "S", "PSY"],
-  ["BARRERA", 2, 100],
   ["CONFUSION", 50, 100, "S", "PSY"],
   ["PUÑO DINAMICO", 100, 50, "F", "FIGHT"],
   ["PATADA SALTO", 100, 95, "F", "FIGHT"],
+  ["ONDA CERTERA", 120, 70, "S", "FIGHT"],
   ["PUNTAPIE", 65, 100, "F", "FIGHT"],
   ["FINTA", 60, 100, "S", "DARK"],
   ["PULSO UMBRIO", 80, 100, "S", "DARK"],
-  ["MEDITACION", 1.5, 100],
-  ["LATIGO", 0.75, 100],
+  ["MEDITACION", 1.5, 100,"N","NORMAL"],
+  ["LATIGO", 0.75, 100,"N","NORMAL"],
+  ["BARRERA", 2, 100, "N", "PSY"]
 ];
 
 let divataques = document.getElementById("ataques");
@@ -71,37 +75,40 @@ for (let atr of listaPokemon[numeroPokemonEnemigo - 1]) {
   objetoPokemonEnemigo.push(atr);
 }
 
-//listaPokemon[numeroPokemonEnemigo - 1]
 let objetoPokemonAliado = [];
 
 const efectividad = (attack, Pokemon2, type) => {
-  if (attack[4] == "PSY" && Pokemon2[Pokemon2.length - 1] == "DARK") {
+  if (attack[4] == "PSY" && (Pokemon2[Pokemon2.length - 2] == "DARK")||(Pokemon2[Pokemon2.length - 1] == "DARK")) {
     type *= 0;
   }
-  if (attack[4] == "PSY" && Pokemon2[Pokemon2.length - 1] == "FIGHT") {
+  if (attack[4] == "PSY" && (Pokemon2[Pokemon2.length - 2] == "FIGHT"||Pokemon2[Pokemon2.length - 1] == "FIGHT")) {
     type *= 2;
   }
-  if (attack[4] == "PSY" && Pokemon2[Pokemon2.length - 1] == "PSY") {
+  if (attack[4] == "PSY" && (Pokemon2[Pokemon2.length - 2] == "PSY"||Pokemon2[Pokemon2.length - 1] == "PSY")) {
     type *= 0.5;
   }
-  if (attack[4] == "FIGHT" && Pokemon2[Pokemon2.length - 1] == "PSY") {
+  if (attack[4] == "FIGHT" && (Pokemon2[Pokemon2.length - 2] == "PSY"||Pokemon2[Pokemon2.length - 1] == "PSY")) {
     type *= 0.5;
   }
   if (
     attack[4] == "FIGHT" &&
     (Pokemon2[Pokemon2.length - 1] == "FIGHT" ||
-      Pokemon2[Pokemon2.length - 1] == "DARK")
+      Pokemon2[Pokemon2.length - 1] == "DARK"||
+      Pokemon2[Pokemon2.length - 2] == "FIGHT"||
+      Pokemon2[Pokemon2.length - 2] == "DARK")
   ) {
     type *= 2;
   }
   if (
     attack[4] == "DARK" &&
     (Pokemon2[Pokemon2.length - 1] == "FIGHT" ||
-      Pokemon2[Pokemon2.length - 1] == "DARK")
+      Pokemon2[Pokemon2.length - 1] == "DARK"||
+      Pokemon2[Pokemon2.length - 2] == "FIGHT"||
+      Pokemon2[Pokemon2.length - 2] == "DARK")
   ) {
     type *= 0.5;
   }
-  if (attack[4] == "DARK" && Pokemon2[Pokemon2.length - 1] == "PSY") {
+  if (attack[4] == "DARK" && (Pokemon2[Pokemon2.length - 1] == "PSY"||Pokemon2[Pokemon2.length - 2])) {
     type *= 2;
   }
   return type;
@@ -153,8 +160,8 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
           case 0.5:
             escribir = "No es muy eficaz.";
             break;
-          default:
-            Pokemon1[0] + " <br><br>usó " + attack[0] + ".";
+          case 1:
+            escribir=Pokemon1[0] + " <br><br>usó " + attack[0] + ".";
             break;
         }
 
@@ -223,7 +230,7 @@ const quienAtaca = (attack) => {
     setTimeout(() => {
       let attack2 =
         listaPokemon[numeroPokemonEnemigo - 1][
-          Math.floor(7 + Math.random() * 4)
+        Math.floor(7 + Math.random() * 4)
         ];
       for (let move of movimientos) {
         if (move[0] == attack2) {
@@ -252,7 +259,7 @@ const quienAtaca = (attack) => {
         Poke.remove();
         setTimeout(() => {
           dialogo.textContent = "Has Perdido";
-        }, 10000);
+        }, 4000);
       }
     }, 6000);
   } else {
@@ -308,7 +315,7 @@ const quienAtaca = (attack) => {
 
         setTimeout(() => {
           dialogo.textContent = "Has Ganado";
-        }, 10000);
+        }, 4000);
       }
     }, 6000);
   }
@@ -338,25 +345,26 @@ const cargarAtaques = () => {
   let contador = 0;
   for (let element of ataques) {
     element.value = listaPokemon[numeroPokemonMio - 1][7 + contador];
-    if (
-      element.value == "PSIQUICO" ||
-      element.value == "BARRERA" ||
-      element.value == "CONFUSION"
-    ) {
-      element.classList.add("psy");
-    }
-    if (
-      element.value == "PUÑO DINAMICO" ||
-      element.value == "PUNTAPIE" ||
-      element.value == "PATADA SALTO"
-    ) {
-      element.classList.add("fight");
-    }
-    if (element.value == "FINTA" || element.value == "PULSO UMBRIO") {
-      element.classList.add("sin");
-    }
-    if (element.value == "LATIGO" || element.value == "MEDITACION") {
-      element.classList.add("normal");
+    for (let ataque of movimientos) {
+      if (ataque[0] == element.value) {
+        if (
+          ataque[4] == "PSY"
+        ) {
+          element.classList.add("psy");
+        }
+        if (
+          ataque[4] == "FIGHT"
+        ) {
+          element.classList.add("fight");
+        }
+        if (ataque[4] == "DARK") {
+          element.classList.add("sin");
+        }
+        if (ataque[4] == "NORMAL") {
+          element.classList.add("normal");
+        }
+      }
+
     }
     contador++;
   }
@@ -421,4 +429,3 @@ const config = (event) => {
 
 divataques.addEventListener("click", filtrarAtaque);
 document.addEventListener("click", config);
-// document.addEventListener("DOMContentLoaded",primeraCarga)
