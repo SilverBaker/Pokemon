@@ -14,6 +14,10 @@ body{
     max-width: 599px;
     height: 534px;
     background-color: whitesmoke;
+    background-image: url("../assets/images/fondo.png");
+    background-size: 100% 75%;
+    image-rendering: pixelated;
+
 }
 
 #dialogo{
@@ -35,37 +39,73 @@ input:hover{
     color: black;
 }
 
+.PSY{
+    background-color: rgb(255, 92, 233);
+}
+
+.FIGHT{
+    background-color: rgb(133, 75, 0);
+}
+
+.DARK{
+    background-color: rgb(31, 31, 31);
+    color: aliceblue;
+}
+
+.NORMAL{
+    background-color: aliceblue;
+}
+
+.GROUND{
+    background-color: rgb(170, 134, 80);
+}
+
+.VENENO{
+    background-color: rgb(66, 0, 128);
+    color: aliceblue;
+}
+
+.ICE{
+    background-color: rgb(194, 255, 250);
+}
+
+.AGUA{
+    background-color: rgb(35, 164, 250);
+}
+
+.ELEC{
+    background-color: rgb(253, 255, 110);
+}
+
+.ROCK{
+    background-color: rgb(185, 167, 131);
+}
+
+.FIRE{
+    background-color: rgb(255, 147, 6);
+}
+
+.GHOST{
+    background-color: rgb(63, 21, 102);
+    color: aliceblue;
+}
+
+
+
 img{
     width: 200%;
     image-rendering: pixelated;
 }
 
 .containerDialogo{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     position: absolute;
     top:400px;
     left:2px;
     width: 584px;
     height: 120px;
-    border: 5px solid black;
+    border: 5px solid rgb(0, 0, 0);
     border-radius: 10px;
-}
-
-.psy{
-    background-color: rgb(255, 92, 233);
-}
-
-.fight{
-    background-color: rgb(133, 75, 0);
-}
-
-.sin{
-    background-color: rgb(31, 31, 31);
-    color: aliceblue;
-}
-
-.normal{
-    background-color: aliceblue;
 }
 
 
@@ -75,13 +115,21 @@ img{
     flex-direction: column;
 }
 
+.barraVida{
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: aliceblue;
+}
+
 
 
 #barraVidaEnemigo{
     position: absolute;
     top: 50px;
     left: 70px;
-    width: 200px;
+    min-width: 200px;
+    max-width: 220px;
     display: flex;
     flex-direction: column;
     padding: 0.3rem;
@@ -105,9 +153,8 @@ img{
 }
 
 .PS{
+    text-align: left;
     flex-wrap: wrap;
-    border-bottom: 5px solid black;
-    border-left: 5px solid black;
     margin-top: -1rem;
     padding: 0.3rem;
     display: flex;
@@ -154,6 +201,7 @@ img{
     display: flex;
     width: 80%;
     margin: auto;
+    flex-wrap: wrap;
 }
 
 .poke{
@@ -161,7 +209,8 @@ img{
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    width: 30%;
+    width: 20.5%;
+    margin: auto;
     margin: 1rem;
     border-radius: 30px;
     background-color: #EEEBEB;

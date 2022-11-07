@@ -16,7 +16,7 @@ let listaPokemon = [
     "PSIQUICO",
     "BARRERA",
     "ONDA CERTERA",
-    "CONFUSION",
+    "BOLA SOMBRA",
     "PSY",
     ""
   ],
@@ -45,11 +45,86 @@ let listaPokemon = [
     92,
     "PATADA SALTO",
     "MEDITACION",
-    "PUÑO DINAMICO",
+    "TERREMOTO",
     "PUNTAPIE",
     "FIGHT",
     ""
   ],
+  [
+    "ELECTABUZZ",
+    125,
+    88,
+    62,
+    100,
+    90,
+    110,
+    "RAYO",
+    "PSIQUICO",
+    "PUNTAPIE",
+    "MALICIOSO",
+    "ELEC",
+    ""
+  ],
+  [
+    "TENTACRUEL",
+    140,
+    75,
+    70,
+    85,
+    125,
+    105,
+    "SURF",
+    "PUYA NOCIVA",
+    "RAYO HIELO",
+    "BARRERA",
+    "AGUA",
+    "VENENO"
+  ],
+  [
+    "PILOSWINE",
+    160,
+    105,
+    85,
+    65,
+    65,
+    55,
+    "TERREMOTO",
+    "RAYO HIELO",
+    "ROCA AFILADA",
+    "GOLPE CUERPO",
+    "ICE",
+    "GROUND"
+  ],
+  [
+    "MISDREAVUS",
+    135,
+    73,
+    73,
+    101,
+    101,
+    101,
+    "BOLA SOMBRA",
+    "PSIQUICO",
+    "PULSO UMBRIO",
+    "RAYO",
+    "GHOST",
+    ""
+  ],
+  [
+    "MAGCARGO",
+    110,
+    55,
+    125,
+    85,
+    85,
+    35,
+    "LANZALLAMAS",
+    "TERREMOTO",
+    "ROCA AFILADA",
+    "MALICIOSO",
+    "FIRE",
+    "ROCK"
+  ]
 ];
 
 let movimientos = [
@@ -61,14 +136,27 @@ let movimientos = [
   ["PUNTAPIE", 65, 100, "F", "FIGHT"],
   ["FINTA", 60, 100, "S", "DARK"],
   ["PULSO UMBRIO", 80, 100, "S", "DARK"],
+
+  ["SURF", 90, 100, "S", "AGUA"],
+  ["LANZALLAMAS", 90, 100, "S", "FIRE"],
+  ["HOJA AGUDA", 90, 100, "F", "PLANT"],
+  ["RAYO", 90, 100, "S", "ELEC"],
+  ["ROCA AFILADA", 100, 80, "F", "ROCK"],
+  ["TERREMOTO", 100, 100, "F", "GROUND"],
+  ["BOLA SOMBRA", 80, 100, "S", "GHOST"],
+  ["PUYA NOCIVA", 80, 100, "F", "VENENO"],
+  ["RAYO HIELO", 90, 100, "S", "ICE"],
+  ["GOLPE CUERPO", 90, 100, "F", "NORMAL"],
+
   ["MEDITACION", 1.5, 100,"N","NORMAL"],
+  ["MALICIOSO", 0.75, 100,"N","NORMAL"],
   ["LATIGO", 0.75, 100,"N","NORMAL"],
   ["BARRERA", 2, 100, "N", "PSY"]
 ];
 
 let divataques = document.getElementById("ataques");
 let numeroPokemonMio;
-let numeroPokemonEnemigo = Math.floor(1 + Math.random() * 3);
+let numeroPokemonEnemigo = Math.floor(1 + Math.random() * listaPokemon.length);
 let objetoPokemonEnemigo = [];
 
 for (let atr of listaPokemon[numeroPokemonEnemigo - 1]) {
@@ -77,38 +165,292 @@ for (let atr of listaPokemon[numeroPokemonEnemigo - 1]) {
 
 let objetoPokemonAliado = [];
 
-const efectividad = (attack, Pokemon2, type) => {
-  if (attack[4] == "PSY" && (Pokemon2[Pokemon2.length - 2] == "DARK")||(Pokemon2[Pokemon2.length - 1] == "DARK")) {
+const efectividad = (attack, tipo, type) => {
+  // Filtro ataque Psíquico
+  if (attack[4] == "PSY" && (
+    tipo == "DARK")) {
     type *= 0;
   }
-  if (attack[4] == "PSY" && (Pokemon2[Pokemon2.length - 2] == "FIGHT"||Pokemon2[Pokemon2.length - 1] == "FIGHT")) {
+  if (attack[4] == "PSY" && (
+    tipo == "FIGHT"||
+    tipo == "VENENO")) {
     type *= 2;
   }
-  if (attack[4] == "PSY" && (Pokemon2[Pokemon2.length - 2] == "PSY"||Pokemon2[Pokemon2.length - 1] == "PSY")) {
+  if (attack[4] == "PSY" && (
+    tipo == "PSY"||
+    tipo == "STEEL")) {
     type *= 0.5;
   }
-  if (attack[4] == "FIGHT" && (Pokemon2[Pokemon2.length - 2] == "PSY"||Pokemon2[Pokemon2.length - 1] == "PSY")) {
+  // Filtro ataque Lucha
+  if (attack[4] == "FIGHT" && (
+    tipo == "GHOST")) {
+    type *= 0;
+  }
+  if (attack[4] == "FIGHT" && (
+    tipo == "PSY"||
+    tipo == "BUG"||
+    tipo == "VENENO"||
+    tipo == "FLY")) {
     type *= 0.5;
   }
   if (
     attack[4] == "FIGHT" &&
-    (Pokemon2[Pokemon2.length - 1] == "FIGHT" ||
-      Pokemon2[Pokemon2.length - 1] == "DARK"||
-      Pokemon2[Pokemon2.length - 2] == "FIGHT"||
-      Pokemon2[Pokemon2.length - 2] == "DARK")
+    (tipo == "ICE" ||
+      tipo == "DARK"||
+      tipo == "STEEL"||
+      tipo == "NORMAL"||
+      tipo == "ROCK")
   ) {
     type *= 2;
   }
+  // Filtro ataque Siniestro
   if (
     attack[4] == "DARK" &&
-    (Pokemon2[Pokemon2.length - 1] == "FIGHT" ||
-      Pokemon2[Pokemon2.length - 1] == "DARK"||
-      Pokemon2[Pokemon2.length - 2] == "FIGHT"||
-      Pokemon2[Pokemon2.length - 2] == "DARK")
+    (tipo == "FIGHT" ||
+      tipo == "DARK")
   ) {
     type *= 0.5;
   }
-  if (attack[4] == "DARK" && (Pokemon2[Pokemon2.length - 1] == "PSY"||Pokemon2[Pokemon2.length - 2])) {
+  if (attack[4] == "DARK" && (
+    tipo == "PSY"||
+    tipo == "GHOST")) {
+    type *= 2;
+  }
+  // Filtro ataque Agua
+  if (
+    attack[4] == "AGUA" &&
+    (tipo == "AGUA" ||
+      tipo == "DRAGON"||
+      tipo == "PLANT")
+  ) {
+    type *= 0.5;
+  }
+  if (attack[4] == "AGUA" && (
+    tipo == "FIRE"||
+    tipo == "ROCK"||
+    tipo == "GROUND")) {
+    type *= 2;
+  }
+  // Filtro ataque Acero
+  if (attack[4] == "STEEL" && (
+    tipo == "STEEL"||
+    tipo == "AGUA")) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "STEEL" &&
+    (
+      tipo == "ROCK"||
+      tipo == "ICE"||
+      tipo == "FIRE"||
+      tipo == "ELEC")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque Bicho
+  if (attack[4] == "BUG" && (
+    tipo == "STEEL"||
+    tipo == "GHOST"||
+    tipo == "FIRE"||
+    tipo == "FIGHT"||
+    tipo == "VENENO"||
+    tipo == "FLY")) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "BUG" &&
+    (tipo == "PLANT"||
+    tipo == "PSY"||
+    tipo == "DARK")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque Dragon
+  if (attack[4] == "DRAGON" && (
+    tipo == "STEEL")) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "DRAGON" &&
+    (tipo == "DRAGON")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque ELECTRICO
+  if (attack[4] == "ELEC" && (
+    tipo == "GROUND")) {
+    type *= 0;
+  }
+  if (attack[4] == "ELEC" && (
+    tipo == "DRAGON"||
+    tipo == "ELEC"||
+    tipo == "PLANT")) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "ELEC" &&(
+      tipo == "AGUA"||
+      tipo == "FLY"
+    )
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque FANTASMA
+  if (attack[4] == "GHOST" && (
+    tipo == "NORMAL")) {
+    type *= 0;
+  }
+  if (attack[4] == "GHOST" && (
+    tipo == "DARK")) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "GHOST" &&(
+      tipo == "GHOST"||
+      tipo == "PSY"
+    )
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque FUEGO
+  if (attack[4] == "FIRE" && (
+    tipo == "DRAGON"||
+    tipo == "AGUA"||
+    tipo == "FIRE"||
+    tipo == "ROCK"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "FIRE" &&(
+    tipo == "STEEL"||
+    tipo == "BUG"||
+    tipo == "ICE"||
+    tipo == "PLANT")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque ICE
+  if (attack[4] == "ICE" && (
+    tipo == "STEEL"||
+    tipo == "AGUA"||
+    tipo == "ICE"||
+    tipo == "FIRE"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "ICE" &&(
+      tipo == "DRAGON"||
+      tipo == "PLANT"||
+      tipo == "GROUND"||
+      tipo == "FLY")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque NORMAL
+  if (attack[4] == "NORMAL" && (
+    tipo == "GHOST")) {
+    type *= 0;
+  }
+  if (attack[4] == "NORMAL" && (
+    tipo == "STEEL"||
+    tipo == "ROCK")) {
+    type *= 0.5;
+  }
+  // Filtro ataque PLANT
+  if (attack[4] == "PLANT" && (
+    tipo == "STEEL"||
+    tipo == "BUG"||
+    tipo == "DRAGON"||
+    tipo == "FIRE"||
+    tipo == "PLANT"||
+    tipo == "VENENO"||
+    tipo == "FLY"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "PLANT" &&(
+      tipo == "AGUA"||
+      tipo == "GROUND"||
+      tipo == "ROCK")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque ROCK
+  if (attack[4] == "ROCK" && (
+    tipo == "STEEL"||
+    tipo == "FIGHT"||
+    tipo == "GROUND"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "ROCK" &&(
+      tipo == "BUG"||
+      tipo == "FIRE"||
+      tipo == "ICE"||
+      tipo == "FLY")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque GROUND
+  if (attack[4] == "GROUND" && (
+    tipo == "FLY"
+  )) {
+    type *= 0;
+  }
+  if (attack[4] == "GROUND" && (
+    tipo == "BUG"||
+    tipo == "PLANT"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "GROUND" &&(
+      tipo == "STEEL"||
+      tipo == "ELEC"||
+      tipo == "FIRE"||
+      tipo == "VENENO"||
+      tipo == "ROCK"
+  )) {
+    type *= 2;
+  }
+  // Filtro ataque VENENO
+  if (attack[4] == "VENENO" && (
+    tipo == "STEEL"
+  )) {
+    type *= 0;
+  }
+  if (attack[4] == "VENENO" && (
+    tipo == "GHOST"||
+    tipo == "GROUND"||
+    tipo == "VENENO"||
+    tipo == "ROCK"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "VENENO" &&(
+      tipo == "PLANT")
+  ) {
+    type *= 2;
+  }
+  // Filtro ataque FLY
+  if (attack[4] == "FLY" && (
+    tipo == "STEEL"||
+    tipo == "ELEC"||
+    tipo == "ROCK"
+  )) {
+    type *= 0.5;
+  }
+  if (
+    attack[4] == "FLY" &&(
+      tipo == "BUG"||
+      tipo == "FIGHT"||
+      tipo == "PLANT")
+  ) {
     type *= 2;
   }
   return type;
@@ -135,7 +477,7 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
         case 0.75:
           setTimeout(() => {
             dialogo.innerHTML =
-              "La defensa de " + Pokemon2[0] + "<br><br>disminuyó";
+              "La defensa de <br><br>" + Pokemon2[0] + " disminuyó";
           }, 2000);
           Pokemon2[3] *= 0.5;
           break;
@@ -148,8 +490,8 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
         let stab = 1;
         let type = 1;
 
-        type = efectividad(attack, Pokemon2, type);
-
+        type = efectividad(attack, Pokemon2[Pokemon2.length-2], type);
+        type = efectividad(attack, Pokemon2[Pokemon2.length-1], type)
         switch (type) {
           case 0:
             escribir = "No surtió ningún<br><br>efecto.";
@@ -157,7 +499,11 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
           case 2:
             escribir = "¡Es muy eficaz!";
             break;
+          case 4:
+            escribir = "¡Es supereficaz!"
+            break;
           case 0.5:
+          case 0.25:
             escribir = "No es muy eficaz.";
             break;
           case 1:
@@ -347,22 +693,7 @@ const cargarAtaques = () => {
     element.value = listaPokemon[numeroPokemonMio - 1][7 + contador];
     for (let ataque of movimientos) {
       if (ataque[0] == element.value) {
-        if (
-          ataque[4] == "PSY"
-        ) {
-          element.classList.add("psy");
-        }
-        if (
-          ataque[4] == "FIGHT"
-        ) {
-          element.classList.add("fight");
-        }
-        if (ataque[4] == "DARK") {
-          element.classList.add("sin");
-        }
-        if (ataque[4] == "NORMAL") {
-          element.classList.add("normal");
-        }
+        element.classList.add(ataque[4])
       }
 
     }
@@ -377,12 +708,12 @@ const primeraCarga = () => {
   let imagenEnemigo = document.createElement("img");
   let imagenAliado = document.createElement("img");
   pokeAliado.style.position = "absolute";
-  pokeAliado.style.top = "290px";
-  pokeAliado.style.left = "94px";
+  pokeAliado.style.top = "270px";
+  pokeAliado.style.left = "84px";
   pokeAliado.id = "MiPoke";
   pokeEnemigo.style.position = "absolute";
-  pokeEnemigo.style.top = "54px";
-  pokeEnemigo.style.left = "384px";
+  pokeEnemigo.style.top = "94px";
+  pokeEnemigo.style.left = "364px";
   pokeEnemigo.id = "SuPoke";
   imagenAliado.src =
     "./assets/images/Pokemon/Back/" + numeroPokemonMio + ".png";
@@ -427,5 +758,28 @@ const config = (event) => {
   }
 };
 
+const generarDivs=()=>{
+  let elegirPokemon=document.getElementById("elegirPokemon")
+  let c=0
+  let fragmento=document.createDocumentFragment()
+    for(let pokemon of listaPokemon){
+      c++
+      let article=document.createElement("article")
+      article.classList.add("poke")
+      let header=document.createElement("header")
+      header.textContent=pokemon[0]
+      let imagen = document.createElement("img");
+      imagen.src = "./assets/images/Pokemon/Front/" + c + ".png";
+      imagen.classList.add("elegir__img")
+      article.appendChild(header)
+      article.appendChild(imagen)
+      fragmento.appendChild(article)
+    }
+    elegirPokemon.appendChild(fragmento)
+}
+
+
 divataques.addEventListener("click", filtrarAtaque);
 document.addEventListener("click", config);
+
+document.addEventListener("DOMContentLoaded",generarDivs)
