@@ -160,7 +160,12 @@ let numeroPokemonEnemigo = Math.floor(1 + Math.random() * listaPokemon.length);
 let objetoPokemonEnemigo = [];
 
 for (let atr of listaPokemon[numeroPokemonEnemigo - 1]) {
-  objetoPokemonEnemigo.push(atr);
+  if (atr==listaPokemon[numeroPokemonEnemigo - 1][0]){
+    objetoPokemonEnemigo.push(atr+" enemigo");
+  }else{
+    objetoPokemonEnemigo.push(atr);
+  }
+  
 }
 
 let objetoPokemonAliado = [];
@@ -284,7 +289,8 @@ const efectividad = (attack, tipo, type) => {
   if (attack[4] == "ELEC" && (
     tipo == "DRAGON"||
     tipo == "ELEC"||
-    tipo == "PLANT")) {
+    tipo == "PLANT"||
+    tipo=="ROCK")) {
     type *= 0.5;
   }
   if (
@@ -477,7 +483,7 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
         case 0.75:
           setTimeout(() => {
             dialogo.innerHTML =
-              "La defensa de <br><br>" + Pokemon2[0] + " disminuyó";
+              "La defensa de <br><br>" + Pokemon2[0] + " bajó";
           }, 2000);
           Pokemon2[3] *= 0.5;
           break;
@@ -515,7 +521,7 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
           dialogo.innerHTML = escribir;
         }, 2000);
 
-        if (attack[4] == Pokemon1[Pokemon1.length - 1]) {
+        if (attack[4] == Pokemon1[Pokemon1.length - 1]||attack[4] == Pokemon1[Pokemon1.length - 2]) {
           stab = 1.5;
         }
 
@@ -777,7 +783,6 @@ const generarDivs=()=>{
     }
     elegirPokemon.appendChild(fragmento)
 }
-
 
 divataques.addEventListener("click", filtrarAtaque);
 document.addEventListener("click", config);
