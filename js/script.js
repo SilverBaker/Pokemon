@@ -4,6 +4,23 @@ let dialogo = document.getElementById("dialogo");
 let configurado = false;
 let turno = true;
 
+//Array multidimensional con los pokemons
+//Formato de pokemon:
+/*
+NOMBRE,
+VIDA,
+ATAQUE,
+DEFENSA,
+ATAQUE ESPECIAL,
+DEFENSA ESPECIAL,
+VELOCIDAD,
+ATAQUE1,
+ATAQUE2,
+ATAQUE3,
+ATAQUE4,
+TIPO1,
+TIPO2
+ */
 let listaPokemon = [
   [
     "MR MIME",
@@ -127,6 +144,15 @@ let listaPokemon = [
   ]
 ];
 
+//Array multidimensional con los ataques
+//formato
+/*
+NOMBRE,
+DAÑO,
+PRECISION
+,FISICO(F); ESPECIAL(S) O ESTADO(N)
+, TIPO
+*/
 let movimientos = [
   ["PSIQUICO", 90, 100, "S", "PSY"],
   ["CONFUSION", 50, 100, "S", "PSY"],
@@ -154,19 +180,27 @@ let movimientos = [
   ["BARRERA", 2, 100, "N", "PSY"]
 ];
 
+/*
+Metodo para setear el array de los pokemon aliado y enemigo
+pues los arrays se copian por referencia
+*/
+const copiarArray=(numero)=>{
+  let array=[]
+  for (let atr of listaPokemon[numero - 1]) {
+    array.push(atr);
+  }
+  return array
+}
+
+
+
+
 let divataques = document.getElementById("ataques");
 let numeroPokemonMio;
+//genero numero aleatorio para escoger el pokemon del rival
 let numeroPokemonEnemigo = Math.floor(1 + Math.random() * listaPokemon.length);
-let objetoPokemonEnemigo = [];
-
-for (let atr of listaPokemon[numeroPokemonEnemigo - 1]) {
-  if (atr==listaPokemon[numeroPokemonEnemigo - 1][0]){
-    objetoPokemonEnemigo.push(atr+" enemigo");
-  }else{
-    objetoPokemonEnemigo.push(atr);
-  }
-  
-}
+let objetoPokemonEnemigo = copiarArray(numeroPokemonEnemigo);
+objetoPokemonEnemigo[0] = objetoPokemonEnemigo[0]+" enemigo"
 
 let objetoPokemonAliado = [];
 
@@ -753,9 +787,10 @@ const config = (event) => {
       imagen = imagen[0].src.split("/");
       imagen = imagen[imagen.length - 1].split(".")[0];
       numeroPokemonMio = imagen;
-      for (let atr of listaPokemon[numeroPokemonMio - 1]) {
-        objetoPokemonAliado.push(atr);
-      }
+
+      objetoPokemonAliado=copiarArray(numeroPokemonMio)
+      
+      
       nPSrestantes.textContent = objetoPokemonAliado[1] + "/";
       nPS.textContent = objetoPokemonAliado[1];
       configurado = true;
