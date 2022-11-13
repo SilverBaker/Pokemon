@@ -641,7 +641,7 @@ const quienAtaca = (attack) => {
       let Poke = document.getElementById("SuPoke");
       Poke.remove();
       setTimeout(() => {
-        dialogo.textContent = "Has Ganado";
+        setTimeout(terminado(),1000)
       }, 10000);
     }
     setTimeout(() => {
@@ -675,7 +675,7 @@ const quienAtaca = (attack) => {
         let Poke = document.getElementById("MiPoke");
         Poke.remove();
         setTimeout(() => {
-          dialogo.textContent = "Has Perdido";
+          setTimeout(terminado(),1000)
         }, 4000);
       }
     }, 6000);
@@ -709,7 +709,7 @@ const quienAtaca = (attack) => {
       let Poke = document.getElementById("MiPoke");
       Poke.remove();
       setTimeout(() => {
-        dialogo.textContent = "Has Perdido";
+        setTimeout(terminado(),1000)
       }, 10000);
     }
     setTimeout(() => {
@@ -733,7 +733,7 @@ const quienAtaca = (attack) => {
         Poke.remove();
 
         setTimeout(() => {
-          dialogo.textContent = "Has Ganado";
+          setTimeout(terminado(),1000)
         }, 4000);
       }
     }, 6000);
@@ -837,6 +837,12 @@ const config = (event) => {
   }
 };
 
+const terminado =()=>{
+  let container = document.querySelector(".container");
+  container.style.display = "none";
+  let terminado = document.getElementById("terminado");
+  terminado.style.display = "flex";
+}
 
 //genera los pokemons elegibles
 const generarDivs=()=>{
@@ -863,3 +869,7 @@ divataques.addEventListener("click", filtrarAtaque);
 document.addEventListener("click", config);
 
 document.addEventListener("DOMContentLoaded",generarDivs)
+
+document.getElementById("terminado").addEventListener("click",()=>{
+  location.reload()
+})
