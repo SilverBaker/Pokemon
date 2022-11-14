@@ -204,6 +204,16 @@ objetoPokemonEnemigo[0] = objetoPokemonEnemigo[0]+" enemigo"
 
 let objetoPokemonAliado = [];
 
+
+/*
+calcula la efectividad del ataque, se llama dos veces, una para el primer tipo y otra para el segundo
+estructura individual de las comprobaciones
+Si (el tipo del ataque == tipo && (tipodelatacado==a unos tipos concretos)){
+  efectividad = efectividad * x
+}
+
+la efectividad sale de la tabla de tipos
+*/
 const efectividad = (attack, tipo, type) => {
   // Filtro ataque Psíquico
   if (attack[4] == "PSY" && (
@@ -496,6 +506,10 @@ const efectividad = (attack, tipo, type) => {
   return type;
 };
 
+
+/*
+atacar recibe el ataque que hace el usuario, el pokemon atacante y el atacado
+*/
 const atacar = (attack, Pokemon1, Pokemon2) => {
   if (Pokemon2[1] > 0 && Pokemon1[1] > 0) {
     dialogo.innerHTML = Pokemon1[0] + " <br><br>usó " + attack[0] + ".";
