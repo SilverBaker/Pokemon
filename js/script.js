@@ -4,9 +4,9 @@ let dialogo = document.getElementById("dialogo");
 let configurado = false;
 let turno = true;
 
-//Array multidimensional con los pokemons
-//Formato de pokemon:
-/*
+/*Array multidimensional con los pokemons
+Formato de pokemon:
+
 NOMBRE,
 VIDA,
 ATAQUE,
@@ -144,9 +144,8 @@ let listaPokemon = [
   ]
 ];
 
-//Array multidimensional con los ataques
-//formato
-/*
+/*Array multidimensional con los ataques
+formato
 NOMBRE,
 DAÑO,
 PRECISION
@@ -204,6 +203,7 @@ objetoPokemonEnemigo[0] = objetoPokemonEnemigo[0]+" enemigo"
 
 let objetoPokemonAliado = [];
 
+<<<<<<< HEAD
 
 /*
 calcula la efectividad del ataque, se llama dos veces, una para el primer tipo y otra para el segundo
@@ -213,6 +213,11 @@ Si (el tipo del ataque == tipo && (tipodelatacado==a unos tipos concretos)){
 }
 
 la efectividad sale de la tabla de tipos
+=======
+/*
+Metodo para comprobar la efectividad del ataque contra el pokemon atacado
+La efectividad está determinada por la tabla de tipos 
+>>>>>>> 412f93da7d2e55679434c8bda3d570b7ea446326
 */
 const efectividad = (attack, tipo, type) => {
   // Filtro ataque Psíquico
@@ -506,14 +511,24 @@ const efectividad = (attack, tipo, type) => {
   return type;
 };
 
+<<<<<<< HEAD
 
 /*
 atacar recibe el ataque que hace el usuario, el pokemon atacante y el atacado
+=======
+/* 
+  Atacar devuelve el daño que se le hace al Pokemon atacado, solo se ejecuta si ambos pokemon tienen vida
+  controlo con setTimeout la ejecucion del codigo para que ocurra escalado
+  y el usuario se entere de lo que pasa.
+  Pues si no pasaria todo a la vez
+>>>>>>> 412f93da7d2e55679434c8bda3d570b7ea446326
 */
 const atacar = (attack, Pokemon1, Pokemon2) => {
   if (Pokemon2[1] > 0 && Pokemon1[1] > 0) {
     dialogo.innerHTML = Pokemon1[0] + " <br><br>usó " + attack[0] + ".";
     let escribir = "";
+    //comprueba si tiene menos o igual de 2 de daño el ataque
+    //porque significa que es un ataque de estado
     if (attack[1] <= 2) {
       switch (attack[1]) {
         case 2:
@@ -538,6 +553,14 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
       }
       return 0;
     } else {
+      /*comprobamos si falla, comparando el numero random con la probabilidad del ataque.
+      puño dinamico tiene 50%, 
+      el numero nos genera 51,
+      el ataque falla,
+      si el numero nos genera 50 o menos,
+      el ataque acierta
+      
+      */
       if (falla() <= attack[2]) {
         let ataque;
         let defensa;
@@ -585,32 +608,43 @@ const atacar = (attack, Pokemon1, Pokemon2) => {
           stab *
           type
         );
-      } else {
+      }/* Si falla se esribe "PUÑO DINAMICO" falló */ 
+      else {
         setTimeout(() => {
           dialogo.innerHTML = attack[0] + "<br><br> falló.";
         }, 2000);
         return 0;
       }
     }
-  } else {
+  }//si alguno de los pokemons no tiene vida devuelve 0 y no cambia nada 
+  else {
     return 0;
   }
 };
 
+//funcion para determinar si falla el ataque
 const falla = () => {
   return Math.floor(Math.random() * 100);
 };
 
+
+/*
+Determina quien ataca, comprobando las velocidades de los pokemon y actua en consecuencia
+*/
 const quienAtaca = (attack) => {
+
+  //Si tu eres más rápido
   if (objetoPokemonAliado[6] >= objetoPokemonEnemigo[6]) {
+    //invocas a atacar y le pasamos los parametros
     let damageEnemigo = atacar(
       attack,
       objetoPokemonAliado,
       objetoPokemonEnemigo
     );
+    //restamos el daño a la vida
     objetoPokemonEnemigo[1] =
       objetoPokemonEnemigo[1] - Math.floor(damageEnemigo);
-
+      //cambiamos la barra de vida
     let porcentajeEnemigo =
       (objetoPokemonEnemigo[1] / listaPokemon[numeroPokemonEnemigo - 1][1]) *
       100;
@@ -619,12 +653,13 @@ const quienAtaca = (attack) => {
     } else {
       PSEnemigo.style.width = porcentajeEnemigo + "%";
     }
-
+    //si el enemigo se debilita (tiene 0 o menos de vida)
+    //se borra del html
     if (objetoPokemonEnemigo[1] <= 0) {
       let Poke = document.getElementById("SuPoke");
       Poke.remove();
       setTimeout(() => {
-        dialogo.textContent = "Has Ganado";
+        setTimeout(terminado(),1000)
       }, 10000);
     }
     setTimeout(() => {
@@ -658,11 +693,13 @@ const quienAtaca = (attack) => {
         let Poke = document.getElementById("MiPoke");
         Poke.remove();
         setTimeout(() => {
-          dialogo.textContent = "Has Perdido";
+          setTimeout(terminado(),1000)
         }, 4000);
       }
     }, 6000);
-  } else {
+  } 
+  //Si el rival es más rapido
+  else {
     let attack2 =
       listaPokemon[numeroPokemonEnemigo - 1][Math.floor(7 + Math.random() * 4)];
     for (let move of movimientos) {
@@ -690,7 +727,7 @@ const quienAtaca = (attack) => {
       let Poke = document.getElementById("MiPoke");
       Poke.remove();
       setTimeout(() => {
-        dialogo.textContent = "Has Perdido";
+        setTimeout(terminado(),1000)
       }, 10000);
     }
     setTimeout(() => {
@@ -714,13 +751,14 @@ const quienAtaca = (attack) => {
         Poke.remove();
 
         setTimeout(() => {
-          dialogo.textContent = "Has Ganado";
+          setTimeout(terminado(),1000)
         }, 4000);
       }
     }, 6000);
   }
 };
 
+//Filtra la elección del usuario, para saber que ha hecho click en un ataque y que puede hacerlo, comprobando si turno es true, lo cual se vuelve false hasta que acaban los ataques de ambos
 const filtrarAtaque = (event) => {
   let evento = event.target;
   if (evento.value != null && turno) {
@@ -740,6 +778,8 @@ const filtrarAtaque = (event) => {
   }
 };
 
+
+//Carga los ataques que tiene el pokemon elegido
 const cargarAtaques = () => {
   let ataques = document.getElementsByTagName("input");
   let contador = 0;
@@ -755,6 +795,7 @@ const cargarAtaques = () => {
   }
 };
 
+//crea los elementos despues de la eleccion del personaje
 const primeraCarga = () => {
   dialogo.innerHTML = "¿Que ataque vas a<br><br> escoger ahora?";
   let pokeEnemigo = document.createElement("div");
@@ -781,6 +822,7 @@ const primeraCarga = () => {
   cargarAtaques();
 };
 
+//a la hora de escoger personaje comprueba si has pinchado en un pokemon. y te lo selecciona
 const config = (event) => {
   if (!configurado) {
     let imagen;
@@ -813,6 +855,14 @@ const config = (event) => {
   }
 };
 
+const terminado =()=>{
+  let container = document.querySelector(".container");
+  container.style.display = "none";
+  let terminado = document.getElementById("terminado");
+  terminado.style.display = "flex";
+}
+
+//genera los pokemons elegibles
 const generarDivs=()=>{
   let elegirPokemon=document.getElementById("elegirPokemon")
   let c=0
@@ -837,3 +887,7 @@ divataques.addEventListener("click", filtrarAtaque);
 document.addEventListener("click", config);
 
 document.addEventListener("DOMContentLoaded",generarDivs)
+
+document.getElementById("terminado").addEventListener("click",()=>{
+  location.reload()
+})

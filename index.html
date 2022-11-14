@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <!-- container del juego que se muestra tras configurar -->
     <div class="container">
         <div id="juego">
             <div id="barraVidaEnemigo" class="barraVida">
@@ -48,10 +49,16 @@
             </div>
         </div>
     </div>
+    <!-- El contenedor config que es el que sale al iniciar la pagina-->
     <div class="Config">
         <p class="Titulo">¡Elige a tu Pokémon!</p>
         <div class="elegir" id="elegirPokemon">
         </div>
+    </div>
+    <!-- Container que sale cuando ha terminado el combate -->
+    <div id="terminado">
+        <p>¿Quieres volver a jugar?</p>
+        <button id="reload">Volver a jugar</button>
     </div>
     <script src="./js/script.js"></script>
 </body>

@@ -20,6 +20,27 @@ body{
 
 }
 
+#terminado{
+    display: none;
+    flex-direction: column;
+    min-height: 300px;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    margin-top: 20vh;
+    background-color: blueviolet;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+#reload{
+    font-family: poke;
+    width: 40%;
+    height: 100px;
+    margin: auto;
+    text-align: center;
+}
+
 #dialogo{
     padding: 0.2rem;
     height: 100%;
@@ -32,6 +53,10 @@ input{
     height: 100px;
     margin-top: 1rem;
     font-family: poke;
+}
+
+.containerps>img{
+    transition: width 1s linear;
 }
 
 input:hover{
