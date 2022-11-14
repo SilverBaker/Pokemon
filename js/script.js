@@ -203,21 +203,9 @@ objetoPokemonEnemigo[0] = objetoPokemonEnemigo[0]+" enemigo"
 
 let objetoPokemonAliado = [];
 
-<<<<<<< HEAD
-
-/*
-calcula la efectividad del ataque, se llama dos veces, una para el primer tipo y otra para el segundo
-estructura individual de las comprobaciones
-Si (el tipo del ataque == tipo && (tipodelatacado==a unos tipos concretos)){
-  efectividad = efectividad * x
-}
-
-la efectividad sale de la tabla de tipos
-=======
 /*
 Metodo para comprobar la efectividad del ataque contra el pokemon atacado
 La efectividad está determinada por la tabla de tipos 
->>>>>>> 412f93da7d2e55679434c8bda3d570b7ea446326
 */
 const efectividad = (attack, tipo, type) => {
   // Filtro ataque Psíquico
@@ -511,17 +499,11 @@ const efectividad = (attack, tipo, type) => {
   return type;
 };
 
-<<<<<<< HEAD
-
-/*
-atacar recibe el ataque que hace el usuario, el pokemon atacante y el atacado
-=======
 /* 
   Atacar devuelve el daño que se le hace al Pokemon atacado, solo se ejecuta si ambos pokemon tienen vida
   controlo con setTimeout la ejecucion del codigo para que ocurra escalado
   y el usuario se entere de lo que pasa.
   Pues si no pasaria todo a la vez
->>>>>>> 412f93da7d2e55679434c8bda3d570b7ea446326
 */
 const atacar = (attack, Pokemon1, Pokemon2) => {
   if (Pokemon2[1] > 0 && Pokemon1[1] > 0) {
